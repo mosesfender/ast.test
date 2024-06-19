@@ -35,6 +35,9 @@ tests/_support/_generated
 /config/test_db.php
 /config/test.php
 /config/__autocomplete.php
-/mail/
+/mail
 /views/site/
-/docs/
+/docs
+/tests
+/commands/HelloController.php
+/vagrant
