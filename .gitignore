@@ -31,3 +31,10 @@ tests/_support/_generated
 
 #vagrant folder
 /.vagrant
+/web/index-test.php
+/config/test_db.php
+/config/test.php
+/config/__autocomplete.php
+/mail/
+/views/site/
+/docs/
