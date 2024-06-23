@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "amd",
+    "removeComments": true,
+    "declaration": true,
+    "strict": false,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    //"outDir": "../../../dist/dialog"
+    "outFile": "../../../dist/dialog/dialog.js"
+  },
+  "files": [
+    "../../../dist/common/svslib.d.ts",
+    "defaults.ts",
+    "uContent.ts",
+    "uPopup.ts",
+    "uDialog.ts"
+  ]
+}

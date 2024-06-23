@@ -2,103 +2,151 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use yii\base\Exception;
+use yii\db\ActiveQuery;
+use app\models\ActiveRecord;
+use yii\web\IdentityInterface;
+
+/**
+ * This is the model class for table "user".
+ *
+ * @property int         $id
+ * @property string      $username
+ * @property string      $password
+ * @property string|null $authKey
+ * @property string|null $accessToken
+ * @property int         $role
+ * @property int         $flags
+ *
+ * @property string      $first_name
+ * @property string      $second_name
+ * @property string|null $sur_name
+ * @property string      $phone
+ * @property string      $email
+ *
+ * @property UserEvent[] $userEvents
+ * @property Event[]     $events
+ */
+class User extends ActiveRecord implements IdentityInterface
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-
+    /* Роли пользователей в данной конструкции */
+    const ROLE_SUPER           = 0x1;
+    const ROLE_EVENT_ORGANIZER = 0x2;
+    
+    /* Флаги пользователя */
+    const FLG_ENABLED = 0x1; // Пользователь может авторизоваться
+    
     /**
      * {@inheritdoc}
      */
+    public static function tableName()
+    {
+        return 'user';
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['username', 'password', 'email', 'first_name', 'second_name'], 'required'],
+            [['username'], 'string', 'max' => 32],
+            [['password'], 'string'],
+            [['first_name', 'second_name'], 'string'],
+            [['sur_name'], 'string'],
+            [['role', 'flags'], 'integer'],
+            ['email', 'email'],
+            ['email', 'unique'],
+            ['phone', 'string', 'max' => 12],
+        ];
+    }
+    
+    static function roles()
+    {
+        return [
+            static::ROLE_SUPER           => \yii::t('app', 'Админ'),
+            static::ROLE_EVENT_ORGANIZER => \yii::t('app', 'Организатор мероприятия'),
+        ];
+    }
+    
+    /**
+     * Поиск пользователя по username.
+     *
+     * @param string $username // Должен быть уже отфильтрованным от грязи в LoginForm
+     *
+     * @return User|null
+     */
+    public static function findByUsername(string $username): ?User
+    {
+        return static::findOne(['username' => $username]);
+    }
+    
+    public function validatePassword($password)
+    {
+        return \yii::$app->getSecurity()->validatePassword($password, $this->password);
+    }
+    
+    /**
+     * Gets query for [[UserEvents]].
+     *
+     * @return ActiveQuery
+     */
+    public function getUserEvents()
+    {
+        return $this->hasMany(UserEvent::class, ['user_id' => 'id']);
+    }
+    
+    /**
+     * Gets query for [[Events]].
+     *
+     * @return ActiveQuery
+     */
+    public function getEvents()
+    {
+        return $this->hasMany(Event::class, ['id' => 'event_id'])->via('userEvent');
+    }
+    
+    /** Implementation IdentityInterface methods */
+    
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return static::findOne(['id' => $id]);
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return static::findOne(['accessToken' => $token]);
     }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getId()
     {
         return $this->id;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getAuthKey()
     {
         return $this->authKey;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function validateAuthKey($authKey)
     {
-        return $this->authKey === $authKey;
+        return $this->authKey = $authKey;
     }
-
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
-    public function validatePassword($password)
+    
+    public function beforeSave($insert)
     {
-        return $this->password === $password;
+        if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord) {
+                try {
+                    $this->password = \yii::$app->getSecurity()->generatePasswordHash($this->password);
+                    $this->accessToken = \yii::$app->getSecurity()->generateRandomString(32);
+                    $this->authKey = \yii::$app->getSecurity()->generateRandomString(32);
+                } catch (Exception $e) {
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

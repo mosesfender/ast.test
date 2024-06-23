@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "amd",
+    "removeComments": true,
+    "declaration": true,
+    "strict": false,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "outDir": "../../../dist/site"
+  },
+  "files": [
+    "../../../dist/common/svslib.d.ts",
+    "../../../dist/dialog/dialog.d.ts",
+    "index.ts"
+  ]
+}

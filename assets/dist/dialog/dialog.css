@@ -1,0 +1,19 @@
+/*!
+ * Copyright (c) Sergey Siunov 2024
+ * @email sergey@siunov.ru
+ */
+.svs-dialog {
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  z-index: 10001;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out 0s;
+  left: 10vw;
+  top: 10vh;
+}
+.svs-dialog.show {
+  opacity: 1;
+}
+
+/*# sourceMappingURL=dialog.css.map */

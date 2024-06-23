@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es6",
+    "removeComments": true,
+    "declaration": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "outFile": "../../../dist/common/svslib.js"
+  },
+  "files": [
+    "types.ts"
+  ]
+}
