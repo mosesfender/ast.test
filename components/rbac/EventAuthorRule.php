@@ -6,6 +6,7 @@
 
 namespace app\components\rbac;
 
+use app\models\Event;
 use app\models\EventSearch;
 use yii\rbac\Item;
 use yii\rbac\Rule;
@@ -24,6 +25,9 @@ class EventAuthorRule extends Rule
      */
     public function execute($user, $item, $params)
     {
+        if(!($params instanceof Event)){
+            return true;
+        }
         /* @var $params EventSearch */
         return $params->isNewRecord || $params->created_by == $user;
     }
