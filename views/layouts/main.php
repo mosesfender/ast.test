@@ -56,9 +56,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     echo Nav::widget([
                          'options' => ['class' => 'navbar-nav'],
                          'items'   => [
-                             \yii::$app->user->can('super')
+                             \yii::$app->user->can('user-man')
                                  ? ['label' => \yii::t('app', 'Users'), 'url' => ['/conductor/user/index']] : '',
-                             \yii::$app->user->can('eo')
+                             \yii::$app->user->can('event.list')
                                  ? ['label' => \yii::t('app', 'Events'), 'url' => ['/conductor/event/index']] : '',
                              \yii::$app->user->isGuest
                                  ? ['label' => \yii::t('app', 'Login'), 'url' => ['/login']]

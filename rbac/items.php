@@ -23,6 +23,16 @@ return [
             'user.delete',
         ]
     ],
+    'event.list' => [
+        'type' => 2,
+    ],
+    'event.view' => [
+        'type' => 2,
+    ],
+    'event.create' => [
+        'type' => 2,
+        'ruleName' => 'ruleEventAuthor',
+    ],
     'event.update' => [
         'type' => 2,
         'ruleName' => 'ruleEventAuthor',
@@ -35,6 +45,9 @@ return [
         // Действия с мероприятиями create, update, delete
         'type'     => 2,
         'children' => [
+            'event.create',
+            'event.list',
+            'event.view',
             'event.update',
             'event.delete',
         ]
@@ -52,9 +65,9 @@ return [
     'super'        => [
         'type'     => 1,
         'children' => [
-            'eo',
             'user-man',
-            !'event-man',
+            'event.view',
+            'event.list',
         ],
     ],
 ];

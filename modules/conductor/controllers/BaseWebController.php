@@ -31,7 +31,7 @@ class BaseWebController extends Controller
                         'allow'       => true,
                         'controllers' => ['conductor/event'],
                         'actions'     => ['index', 'view'],
-                        'roles'       => ['eo']
+                        'roles'       => ['event.list', 'event.view']
                     ],
                     [
                         'allow'       => true,
@@ -43,7 +43,7 @@ class BaseWebController extends Controller
                         'allow'       => true,
                         'controllers' => ['conductor/user'],
                         'actions'     => ['update', 'delete'],
-                        'roles'       => ['event.update', 'event.delete']
+                        'roles'       => ['user.update', 'user.delete']
                     ],
                     [
                         'allow'       => true,
