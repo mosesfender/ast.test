@@ -1,0 +1,27 @@
+@mixin border-radius($radius: 0) {
+  @if $radius != 0 {
+    border-radius: $radius;
+  }
+}
+
+@mixin border-radius-corners($ltr: 0, $rtr: 0, $rbr: 0, $lbr: 0) {
+  @if $ltr != 0 {
+    border-top-left-radius: $ltr;
+  }
+  @if $rtr != 0 {
+    border-top-right-radius: $rtr;
+  }
+  @if $rbr != 0 {
+    border-bottom-right-radius: $rbr;
+  }
+  @if $lbr != 0 {
+    border-bottom-left-radius: $lbr;
+  }
+}
+
+@mixin user-select($val: none) {
+  -webkit-user-select: $val;
+  -moz-user-select: $val;
+  -ms-user-select: $val;
+  user-select: $val;
+}

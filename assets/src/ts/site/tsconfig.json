@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es6",
+    "sourceMap": false,
+    "outDir": "../../../dist/site"
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+    "../../../dist/site/cookie.d.ts",
+    "index.ts",
+    "spoiler.ts"
+  ]
+}

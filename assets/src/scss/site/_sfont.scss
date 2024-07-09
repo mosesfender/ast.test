@@ -1,0 +1,62 @@
+/*!
+ * Copyright © Sergey Siunov. 2024
+ * email: <sergey@siunov.ru>
+ */
+
+$s-icons-font: "sfont" !default;
+$s-icons-font-dir: "./fonts" !default;
+$s-icons-font-file: "#{$s-icons-font-dir}/#{$s-icons-font}" !default;
+$s-icons-font-hash: "24e3eb84d0bcaf83d77f904c78ac1f47" !default;
+$s-icons-font-src: url("#{$s-icons-font-file}.woff2") format("woff2"),
+url("#{$s-icons-font-file}.woff") format("woff") !default;
+
+@font-face {
+    font-display: block;
+    font-family: $s-icons-font;
+    src: $s-icons-font-src;
+}
+
+.si::before,
+[class^="si-"]::before,
+[class*=" si-"]::before {
+    display: inline-block;
+    font-family: $s-icons-font !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: -.125em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$s-icons-map: (
+"block-text": "\61",
+"block-note": "\62",
+"block-citate": "\63",
+"save": "\64",
+"settings": "\65",
+"read": "\66",
+"write": "\67",
+"delete": "\68",
+"arrow-down": "\69",
+"arrow-up": "\6A",
+"block": "\6B",
+"insert-before": "\6C",
+"insert-after": "\6D",
+"insert-end": "\6E",
+"insert-begin": "\6F",
+"star": "\73",
+"warning": "\77",
+"dialog": "\78",
+"search": "\79",
+"password": "\7a",
+"arrow-right": "\5d",
+"arrow-right-double": "\5e",
+"find-in-trash": "\5f",
+);
+
+@each $icon, $codepoint in $s-icons-map {
+    .si-#{$icon}::before { content: $codepoint; }
+}

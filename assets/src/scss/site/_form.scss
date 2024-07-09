@@ -1,0 +1,47 @@
+/*!
+ * Copyright (c) Sergey Siunov 2024
+ * @email sergey@siunov.ru
+ */
+
+div.required {
+  label.form-label {
+    &:after {
+      font-family: "sfont", serif;
+      content: "w";
+      color: #900;
+      margin-left: -8px;
+      font-size: 1rem;
+      opacity: 0.6;
+    }
+  }
+}
+
+.form-floating > label {
+  left: 0.75rem;
+}
+
+label.btn {
+
+  > span.si {
+    margin: 0 .5rem;
+    font-size: xx-large;
+  }
+
+  &.floating {
+    height: calc(3.5rem + calc(var(--bs-border-width) * 2));
+    min-height: calc(3.5rem + calc(var(--bs-border-width) * 2));
+    line-height: 1.25;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.org-list {
+  padding: 1rem;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  ul {
+    margin: 0;
+  }
+}

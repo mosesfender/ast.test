@@ -1,0 +1,174 @@
+/*!
+ * Copyright (c) Sergey Siunov 2024
+ * @email sergey@siunov.ru
+ */
+
+.grid-view {
+
+  .grid-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: .5rem;
+
+    .size-block {
+      display: flex;
+      justify-content: flex-start;
+      width: fit-content;
+      align-items: center;
+
+      select {
+        width: fit-content;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        margin-right: 1rem;
+      }
+    }
+
+    .sort-block {
+      display: flex;
+      align-items: center;
+
+      ul.sorter {
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        padding-block-start: 0;
+        padding-inline-start: 0;
+        padding-left: .2rem;
+        margin: 0;
+
+        li {
+          display: inline-block;
+
+          a {
+            border: 1px solid var(--bs-link-color);
+            color: var(--bs-link-color);
+            text-decoration: none;
+            padding: 2px 4px;
+            margin-left: 2px;
+            @include border-radius(var(--bs-border-radius));
+
+            &.asc:after {
+              border-bottom: solid 7px var(--bs-link-color);
+            }
+
+            &.desc:after {
+              border-top: solid 7px var(--bs-link-color);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ul.pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    li {
+      a {
+        border: 1px solid var(--bs-link-color);
+        color: var(--bs-link-color);
+        text-decoration: none;
+        padding: 2px 4px;
+        margin: 0 1px;
+        @include border-radius(var(--bs-border-radius));
+      }
+
+      &.active {
+        a {
+          background-color: var(--bs-link-color);
+          color: var(--bs-body-color);
+        }
+      }
+
+      &.prev, &.next, &.first, &.last {
+        font-family: SFont, sans-serif;
+
+        a {
+          border: 0;
+          padding: 0;
+        }
+      }
+
+      &.prev, &.first {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  table {
+    &.without-header {
+      thead {
+        tr {
+          visibility: collapse;
+          font-size: 0;
+        }
+      }
+    }
+
+    thead {
+      tr {
+        th {
+          box-shadow: inset 1px 2px 1.2rem 0 rgba(var(--th-shadow-color));
+          text-align: center;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        &.disabled {
+          opacity: .3;
+        }
+      }
+    }
+
+    td.actions {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
+
+  .si {
+    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+    border: 1px solid rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+    font-size: 1.5rem;
+    @include border-radius(var(--bs-border-radius));
+    padding: 2px;
+  }
+
+  dd, dt {
+    display: inline-block;
+    margin: 0;
+  }
+
+  dt {
+    margin-right: 2rem;
+    text-align: right;
+    color: var(--bs-highlight-color);
+    font-size: .8rem;
+  }
+
+  dt.num {
+    width: clamp(1rem, 2rem, 3rem);
+  }
+
+  dd {
+    font-size: .7rem;
+    color: var(--bs-secondary-color-rgb);
+  }
+
+  .event-title {
+    font-weight: bold;
+  }
+
+  .event-wrap {
+    position: relative;
+  }
+
+  @import "spoiler";
+}

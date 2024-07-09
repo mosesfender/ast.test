@@ -1,14 +1,30 @@
 <?php
 
 /** @var yii\web\View $this */
+
 /** @var string $content */
 
 use app\assets\AppAsset;
+use app\assets\SVSDialogAsset;
 use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use yii\validators\ValidationAsset;
+use yii\widgets\ActiveFormAsset;
+
+$theme = $_COOKIE['ast_theme'] ?? 'dark';
+
+$currentRU = $currentUS = '';
+switch (\yii::$app->language) {
+    case 'ru-RU':
+        $currentRU = ' current';
+        break;
+    case 'en-US':
+        $currentUS = ' current';
+        break;
+}
 
 AppAsset::register($this);
 
@@ -21,7 +37,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-100">
+<html lang="<?= Yii::$app->language ?>" class="h-100" data-bs-theme="<?= $theme ?>">
 <head>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -32,28 +48,31 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <header id="header">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
-    ]);
+                      'brandLabel' => Yii::$app->name,
+                      'brandUrl'   => Yii::$app->homeUrl,
+                      'brandImage' => '/ast.svg',
+                      'options'    => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+                  ]);
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/site/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
-    ]);
+                         'options' => ['class' => 'navbar-nav'],
+                         'items'   => [
+                             \yii::$app->user->can('super')
+                                 ? ['label' => \yii::t('app', 'Users'), 'url' => ['/conductor/user/index']] : '',
+                             \yii::$app->user->can('eo')
+                                 ? ['label' => \yii::t('app', 'Events'), 'url' => ['/conductor/event/index']] : '',
+                             \yii::$app->user->isGuest
+                                 ? ['label' => \yii::t('app', 'Login'), 'url' => ['/login']]
+                                 : '<li class="nav-item">'
+                                 . Html::beginForm(['/logout'])
+                                 . Html::submitButton(
+                                     \yii::t('app', 'Logout')
+                                     . '<span>( ' . Yii::$app->user->identity->username . ' )</span>',
+                                     ['class' => 'nav-link btn btn-link logout']
+                                 )
+                                 . Html::endForm()
+                                 . '</li>'
+                         ]
+                     ]);
     NavBar::end();
     ?>
 </header>
@@ -68,14 +87,26 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     </div>
 </main>
 
-<footer id="footer" class="mt-auto py-3 bg-light">
+<footer id="footer" class="mt-auto py-3">
     <div class="container">
         <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
+            <div class="col-md-12 text-right text-md-end">&copy; Сергей Сиунов <?= date('Y') ?></div>
         </div>
     </div>
 </footer>
+
+<div class="lev lev-language">
+    <div class="language ru<?= $currentRU ?>" title="<?= \yii::t('app', 'Russian language') ?>" data-toggle="tooltip"
+         data-placement="left" data-lang="ru-RU"></div>
+    <div class="language eng<?= $currentUS ?>" title="<?= \yii::t('app', 'English language') ?>" data-toggle="tooltip"
+         data-placement="left" data-lang="en-US"></div>
+</div>
+<div class="lev lev-theme">
+    <div class="theme dark" title="<?= \yii::t('app', 'Dark theme') ?>" data-toggle="tooltip"
+         data-placement="left" data-theme="dark"></div>
+    <div class="theme light" title="<?= \yii::t('app', 'Light theme') ?>" data-toggle="tooltip"
+         data-placement="left" data-theme="light"></div>
+</div>
 
 <?php $this->endBody() ?>
 </body>

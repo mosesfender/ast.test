@@ -2,11 +2,13 @@
 
 $result = [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=astdb',
-    'username' => 'ast',
-    'password' => 'alskdjfhg',
+    'dsn' => '',
+    'username' => '',
+    'password' => '',
     'charset' => 'utf8',
-
+    'on afterOpen' => function($event){
+        $event->sender->createCommand("SET time_zone = 'Europe/Moscow'")->execute();
+    }
 ];
 
 if (YII_ENV == YII_ENV_PROD) {

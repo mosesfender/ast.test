@@ -1,0 +1,46 @@
+/*!
+ * Copyright (c) Sergey Siunov 2024
+ * @email sergey@siunov.ru
+ */
+
+.breadcrumb {
+  .breadcrumb-item {
+    padding: 0.4rem 1rem 0.3rem 0.7rem;
+    border-radius: 0.6rem 0 0 0.6rem;
+    height: min-content;
+    display: inline-flex;
+    box-shadow: inset 1px 2px 5px 0 var(--bs-link-color);
+    background-color: var(--bs-body-bg);
+
+    &:last-child {
+      border-top-right-radius: 0.6rem;
+      border-bottom-right-radius: 0.6rem;
+      background-color: rgba(var(--bs-link-bg-color));
+      text-shadow: 1px 1px 1px rgba(var(--bs-link-textshadow-color));
+      color: transparent;
+    }
+
+    &:before {
+      float: none;
+      padding-right: unset;
+      color: unset;
+      content: none;
+    }
+
+    a, span {
+      display: inline-block;
+      max-width: 20vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.8rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+  }
+}
+
+.breadcrumb-item + .breadcrumb-item {
+  margin-left: -.375rem;
+}

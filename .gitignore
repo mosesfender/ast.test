@@ -36,8 +36,13 @@ tests/_support/_generated
 /config/test.php
 /config/__autocomplete.php
 /mail
-/views/site/
 /docs
 /tests
 /commands/HelloController.php
 /vagrant
+/views/site
+/controllers/SiteController.php
+/web/css
+/node_modules/
+/config/web-local.php
+/assets/src/ts/dialog/

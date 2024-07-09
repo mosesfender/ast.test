@@ -1,0 +1,36 @@
+/*!
+ * Copyright (c) Sergey Siunov 2024
+ * @email sergey@siunov.ru
+ */
+
+.select2-container--krajee-bs5 .select2-selection {
+  background-color: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+  color: var(--bs-body-color);
+}
+
+.select2-dropdown {
+  background-color: var(--bs-body-bg);
+}
+
+.select2-container--krajee-bs5 .select2-results__option--highlighted[aria-selected] {
+  background-color: var(--bs-highlight-bg);
+  color: #fff;
+}
+
+.select2-container--krajee-bs5 .select2-results__option[aria-selected] {
+  background-color: var(--bs-body-bg-rgb);
+  color: var(--bs-light-text-emphasis);
+}
+
+.select2-container--krajee-bs5 .select2-results__option.select2-results__option--selected,
+.select2-container--krajee-bs5 .select2-results__option[aria-selected=true] {
+  background-color: var(--select-selected-bg);
+  color: var(--select-selected-color);
+}
+
+.select2-container--krajee-bs5 .select2-selection--multiple .select2-selection__choice {
+  background-color: var(--select-selected-bg);
+  color: var(--select-selected-color);
+}
+
